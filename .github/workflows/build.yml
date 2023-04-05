@@ -1,27 +1,15 @@
-name: pandabuild
-
-on:
-  push:
-  #workflow_dispatch:
-
-permissions:
-  contents: read
-
 jobs:
-  panda-build-job:
-    runs-on:
-      - self-hosted
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      #ビルドに相当
-      - name: panda create artifact
-        run: |
+      - name: build
+        run:| 
           mkdir dist
           echo "panda" > dist/panda.txt
-    # dist配下をartifact.zipとしてアップロードする
-      - name: panda archive zip file
+      - name: Upload base ref info
         uses: actions/upload-artifact@v3
         with:
           name: artifact
-          path: ./dist
+          path:
+            dist
+          retention-days: 1
